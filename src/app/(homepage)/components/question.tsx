@@ -3,7 +3,10 @@
 import HeartBackground from "@/app/(homepage)/components/HeartBackground";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
+import Confetti from "react-dom-confetti";
+import { debounce } from "lodash";
 
 type Step = {
   question: string;
@@ -16,12 +19,13 @@ export type QuestionProps = {
   steps: Step[];
   finalStep: Partial<Step>;
 };
+
 export default function Question({ steps, finalStep }: QuestionProps) {
   const [emojiCount, setEmojiCount] = useState<number>(30);
 
   const [step, setStep] = useState<number>(0);
   const [isFinalStep, setIsFinalStep] = useState<boolean>(false);
-
+  const [isExploding, setIsExploding] = useState<boolean>(false);
   const yesButtonRef = useRef<HTMLButtonElement>(null);
 
   const lastStep = steps[step] || steps[steps.length - 1];
@@ -45,7 +49,25 @@ export default function Question({ steps, finalStep }: QuestionProps) {
   const onYesClick = useCallback(() => {
     setIsFinalStep(true);
     setEmojiCount(50);
+    setIsExploding(true);
   }, [step]);
+
+  useEffect(() => {
+    if (!isFinalStep) {
+      return;
+    }
+
+    const handleClick = debounce(() => {
+      setIsExploding((exploding) => !exploding);
+    }, 300);
+
+    document.body.addEventListener("click", handleClick);
+
+    return () => {
+      document.body.removeEventListener("click", handleClick);
+      handleClick.cancel();
+    };
+  }, [isFinalStep]);
 
   return (
     <>
@@ -81,7 +103,7 @@ export default function Question({ steps, finalStep }: QuestionProps) {
             <Button
               ref={yesButtonRef}
               onClick={onYesClick}
-              className="h-20 bg-green-500 shadow-lg hover:bg-green-600 font-semibold text-lg text-white"
+              className="h-20 max-w-[95vh] bg-green-500 shadow-lg hover:bg-green-600 font-semibold text-lg text-white"
             >
               {lastStep.yesText}
             </Button>
@@ -96,6 +118,29 @@ export default function Question({ steps, finalStep }: QuestionProps) {
           </div>
         </div>
       )}
+      {
+        <Confetti
+          //@ts-ignore
+          className="z-30"
+          active={isExploding}
+          config={{ duration: 1000, elementCount: 200 }}
+        />
+      }
     </>
   );
 }
+
+const source: React.CSSProperties = {
+  position: "absolute",
+  right: "50%",
+  left: "50%",
+  bottom: 50,
+};
+
+const bigExplodeProps = {
+  force: 0.6,
+  duration: 5000,
+  particleCount: 200,
+  floorHeight: 1600,
+  floorWidth: 1600,
+};

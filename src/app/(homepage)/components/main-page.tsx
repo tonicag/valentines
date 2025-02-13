@@ -23,9 +23,9 @@ export default function MainPage() {
       noText: "nah 🌑",
     },
     {
-      question: "haiii stiu ca vrei 👀  sa fii valentinul meu �",
+      question: "pleasssee 🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹",
       image: "https://i.giphy.com/XxEy4h6YxKE2H5TZ1x.webp",
-      yesText: "definitely! 💘",
+      yesText: "daaaaaa! 💘",
       noText: "keep walking 🚶‍♀️",
     },
   ];
