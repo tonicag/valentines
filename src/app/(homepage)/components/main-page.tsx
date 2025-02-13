@@ -10,7 +10,7 @@ export default function MainPage() {
       noText: "nu, nu, nu! 😢",
     },
     {
-      question: "nu manebunii cf 💓",
+      question: "nu manebunii cf?? 💓",
       image: "https://i.giphy.com/yedDQGWwq0heU.webp",
       yesText: "da, da, da! �",
       noText: "nu, nu, nu!",
@@ -23,9 +23,9 @@ export default function MainPage() {
       noText: "nah 🌑",
     },
     {
-      question: "haiii stiu ca vrei 👀  sa fii valentinul meu �",
+      question: "pleasssee 🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹🥹",
       image: "https://i.giphy.com/XxEy4h6YxKE2H5TZ1x.webp",
-      yesText: "definitely! 💘",
+      yesText: "daaaaaa! 💘",
       noText: "keep walking 🚶‍♀️",
     },
   ];
