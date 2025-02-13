@@ -10,7 +10,7 @@ export default function MainPage() {
       noText: "nu, nu, nu! 😢",
     },
     {
-      question: "nu manebunii cf 💓",
+      question: "nu manebunii cf?? 💓",
       image: "https://i.giphy.com/yedDQGWwq0heU.webp",
       yesText: "da, da, da! �",
       noText: "nu, nu, nu!",
