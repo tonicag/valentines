@@ -4,7 +4,6 @@ import HeartBackground from "@/app/(homepage)/components/HeartBackground";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import dynamic from "next/dynamic";
 import Confetti from "react-dom-confetti";
 import { debounce } from "lodash";
 
@@ -50,7 +49,7 @@ export default function Question({ steps, finalStep }: QuestionProps) {
     setIsFinalStep(true);
     setEmojiCount(50);
     setIsExploding(true);
-  }, [step]);
+  }, []);
 
   useEffect(() => {
     if (!isFinalStep) {
@@ -120,7 +119,7 @@ export default function Question({ steps, finalStep }: QuestionProps) {
       )}
       {
         <Confetti
-          //@ts-ignore
+          //@ts-expect-error not implemented
           className="z-30"
           active={isExploding}
           config={{ duration: 1000, elementCount: 200 }}
@@ -129,18 +128,3 @@ export default function Question({ steps, finalStep }: QuestionProps) {
     </>
   );
 }
-
-const source: React.CSSProperties = {
-  position: "absolute",
-  right: "50%",
-  left: "50%",
-  bottom: 50,
-};
-
-const bigExplodeProps = {
-  force: 0.6,
-  duration: 5000,
-  particleCount: 200,
-  floorHeight: 1600,
-  floorWidth: 1600,
-};
