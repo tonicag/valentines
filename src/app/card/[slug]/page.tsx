@@ -32,16 +32,15 @@ async function getCard(slug: string) {
 }
 
 type Props = {
-  params: Promise<{ slug: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  params: { slug: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
 };
 
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const slug = (await params).slug;
-  const card = await getCard(slug);
+  const card = await getCard(params.slug);
 
   if (!card) {
     return {
@@ -84,8 +83,7 @@ export async function generateMetadata(
 }
 
 export default async function CardPage({ params }: Props) {
-  const slug = (await params).slug;
-  const card = await getCard(slug);
+  const card = await getCard(params.slug);
 
   if (!card) {
     notFound();

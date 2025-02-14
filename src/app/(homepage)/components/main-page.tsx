@@ -1,3 +1,5 @@
+"use client";
+
 import Question from "@/app/(homepage)/components/question";
 
 export default function MainPage() {
@@ -12,7 +14,7 @@ export default function MainPage() {
     {
       question: "nu manebunii cf?? 💓",
       image: "https://i.giphy.com/yedDQGWwq0heU.webp",
-      yesText: "da, da, da! �",
+      yesText: "da, da, da!",
       noText: "nu, nu, nu!",
     },
     {
