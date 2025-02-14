@@ -2,12 +2,17 @@
 import React, { useEffect, useRef } from "react";
 import anime from "animejs";
 import "./style.css";
+import { cn } from "@/lib/utils";
 
 type HeartBackgroundProps = {
   itemCount: number;
+  className?: string;
 };
 
-export default function HeartBackground({ itemCount }: HeartBackgroundProps) {
+export default function HeartBackground({
+  itemCount,
+  className,
+}: HeartBackgroundProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<anime.AnimeInstance | null>(null);
 
@@ -80,7 +85,10 @@ export default function HeartBackground({ itemCount }: HeartBackgroundProps) {
   return (
     <div
       ref={containerRef}
-      className="anime-container fixed inset-0 z-0 overflow-hidden pointer-events-none"
+      className={cn(
+        "anime-container fixed inset-0 z-0 overflow-hidden pointer-events-none min-h-screen",
+        className
+      )}
     />
   );
 }

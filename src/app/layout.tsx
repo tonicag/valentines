@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Comic_Neue } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
+import HeartBackground from "@/app/(homepage)/components/HeartBackground";
 
 const comicNeue = Comic_Neue({
   weight: ["400", "700"],
@@ -20,8 +22,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${comicNeue.variable} font-sans antialiased`}>
-        {children}
+      <body
+        className={`${comicNeue.variable} font-sans antialiased bg-pink-100`}
+      >
+        <div className="sticky top-0 flex items-center justify-center py-4 text-white bg-pink-500 border-b-4 border-pink-900 z-[1000]">
+          <Link href="/" className="text-2xl font-bold">
+            wouldyoubemyvalentine, baby?
+          </Link>
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <div className="w-full max-w-screen-lg">{children}</div>
+        </div>
       </body>
     </html>
   );
