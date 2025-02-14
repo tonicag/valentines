@@ -21,7 +21,7 @@ async function getCard(slug: string) {
     .select("*")
     .eq("slug", slug)
     .single();
-
+  console.log("data", { error, slug });
   if (error || !data) {
     console.error("Error fetching card:", error);
     return null;
