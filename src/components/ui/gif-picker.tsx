@@ -13,8 +13,16 @@ import Image from "next/image";
 // apply for a new Web SDK key. Use a separate key for every platform (Android, iOS, Web)
 const gf = new GiphyFetch("yPOGIXU4v6SwbCd11Y2MDlLvqOVaF651");
 
+interface IGif {
+  images: {
+    original: {
+      url: string;
+    };
+  };
+}
+
 export type GifPickerProps = {
-  onGifClick: (gif: any, e: any) => void;
+  onGifClick: (gif: IGif, e: React.SyntheticEvent<HTMLElement, Event>) => void;
   className?: string;
   label?: string;
   value?: string;
@@ -43,7 +51,7 @@ export default function GifPicker({
   );
 
   const onGifClickHandler = useCallback(
-    (gif: any, e: any) => {
+    (gif: IGif, e: React.SyntheticEvent<HTMLElement, Event>) => {
       //   setSelectedImage(gif.images.original.url);
       onGifClick(gif, e);
     },
@@ -57,7 +65,10 @@ export default function GifPicker({
         className
       )}
     >
-      <FormLabel className="">{label}</FormLabel>
+      <div className="flex items-center justify-between">
+        <FormLabel className="">{label}</FormLabel>
+        <Image src="/giphy.gif" alt="giphy logo" width={100} height={100} />
+      </div>
       <div className="flex items-center gap-2 relative">
         <Search className="text-pink-400 w-5 h-5" />
         <Input

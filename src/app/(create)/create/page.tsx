@@ -1,4 +1,31 @@
+import { Metadata } from "next";
 import CreateCardForm from "@/app/(create)/create/components/create-card-form";
+
+export const metadata: Metadata = {
+  title: "Create Your Valentine Card 💌",
+  description:
+    "Create a special Valentine's card with custom questions and GIFs for your loved one.",
+  openGraph: {
+    title: "Create Your Valentine Card 💌",
+    description:
+      "Create a special Valentine's card with custom questions and GIFs for your loved one.",
+    images: [
+      {
+        url: "https://i.giphy.com/XxEy4h6YxKE2H5TZ1x.webp",
+        width: 1200,
+        height: 630,
+        alt: "Create Valentine Card",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Create Your Valentine Card 💌",
+    description:
+      "Create a special Valentine's card with custom questions and GIFs for your loved one.",
+    images: ["https://i.giphy.com/XxEy4h6YxKE2H5TZ1x.webp"],
+  },
+};
 
 export default function CreatePage() {
   return (

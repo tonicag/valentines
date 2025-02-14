@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import {
-  Form,
   FormControl,
   FormDescription,
   FormField,
@@ -12,15 +11,24 @@ import {
 } from "@/components/ui/form";
 import GifPicker from "@/components/ui/gif-picker";
 import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus, Trash } from "lucide-react";
-import { useFieldArray } from "react-hook-form";
+import { useFieldArray, useFormContext } from "react-hook-form";
 
 export default function QuestionsForm() {
+  const form = useFormContext();
+
   const { fields, append, remove } = useFieldArray({
+    control: form.control,
     name: "steps",
   });
-  console.log({ fields });
+
+  const onAddQuestion = async () => {
+    const valid = await form.trigger("steps", { shouldFocus: true });
+    if (valid) {
+      append({ question: "", yesText: "", noText: "", image: "" });
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4">
       {fields.map((field, index) => (
@@ -29,6 +37,7 @@ export default function QuestionsForm() {
             <span className="text-pink-500">Question {index + 1}</span>
             {fields.length > 0 && (
               <Button
+                type="button"
                 variant="ghost"
                 onClick={() => remove(index)}
                 className="p-0"
@@ -42,6 +51,7 @@ export default function QuestionsForm() {
             )}
           </div>
           <FormField
+            control={form.control}
             name={`steps.${index}.question`}
             render={({ field }) => (
               <FormItem>
@@ -57,6 +67,7 @@ export default function QuestionsForm() {
           />
           <div className="flex gap-2 w-full">
             <FormField
+              control={form.control}
               name={`steps.${index}.yesText`}
               render={({ field }) => (
                 <FormItem className="flex-1">
@@ -65,13 +76,15 @@ export default function QuestionsForm() {
                     <Input placeholder="Yes button text" {...field} />
                   </FormControl>
                   <FormDescription>
-                    The text you want to display when the user clicks "Yes".
+                    The text you want to display when the user clicks
+                    &quot;Yes&quot;.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
+              control={form.control}
               name={`steps.${index}.noText`}
               render={({ field }) => (
                 <FormItem className="flex-1">
@@ -80,7 +93,8 @@ export default function QuestionsForm() {
                     <Input placeholder="No button text" {...field} />
                   </FormControl>
                   <FormDescription>
-                    The text you want to display when the user clicks "No".
+                    The text you want to display when the user clicks
+                    &quot;No&quot;.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -88,6 +102,7 @@ export default function QuestionsForm() {
             />
           </div>
           <FormField
+            control={form.control}
             name={`steps.${index}.image`}
             render={({ field }) => (
               <FormItem className="flex-1">
@@ -95,7 +110,6 @@ export default function QuestionsForm() {
                   label="Pick a gif for this question"
                   className="mx-auto mt-4"
                   onGifClick={(gif, e) => {
-                    console.log(gif);
                     e.preventDefault();
                     field.onChange(gif.images.original.url);
                   }}
@@ -107,17 +121,17 @@ export default function QuestionsForm() {
           />
         </div>
       ))}
-      <Button
-        type="button"
-        onClick={() =>
-          append({ question: "", yesText: "", noText: "", image: "" })
-        }
-        variant={"outline"}
-        className="w-full"
-      >
-        <Plus className="w-4 h-4" />
-        <span>Add question</span>
-      </Button>
+      {fields.length < 10 && (
+        <Button
+          type="button"
+          onClick={onAddQuestion}
+          variant="outline"
+          className="w-full"
+        >
+          <Plus className="w-4 h-4 mr-2" />
+          <span>Add question</span>
+        </Button>
+      )}
     </div>
   );
 }
