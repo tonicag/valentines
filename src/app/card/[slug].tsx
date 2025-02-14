@@ -2,6 +2,7 @@ import { createAdminClient } from "@/utils/supabase/server-admin";
 import { notFound } from "next/navigation";
 import Question from "@/app/(homepage)/components/question";
 import { QuestionStep } from "@/types/forms";
+import { Metadata } from "next";
 
 type Card = {
   id: number;
@@ -30,12 +31,39 @@ async function getCard(slug: string) {
   return data as Card;
 }
 
+export async function generateMetadata({
+  params: { slug },
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const card = await getCard(slug);
+
+  if (!card) {
+    return {
+      title: "Valentine Card Not Found 💔",
+      description: "This valentine card doesn't exist. Create your own!",
+    };
+  }
+
+  return {
+    title: `Valentine Card for ${card.name || "Someone Special"} 💝`,
+    description:
+      card.questions[0]?.question || "A special Valentine's card just for you!",
+    openGraph: {
+      images: [
+        card.questions[0]?.image ||
+          "https://i.giphy.com/XxEy4h6YxKE2H5TZ1x.webp",
+      ],
+    },
+  };
+}
+
 export default async function CardPage({
-  params,
+  params: { slug },
 }: {
   params: { slug: string };
 }) {
-  const card = await getCard(params.slug);
+  const card = await getCard(slug);
 
   if (!card) {
     notFound();
