@@ -2,7 +2,6 @@ import { createAdminClient } from "@/utils/supabase/server-admin";
 import { notFound } from "next/navigation";
 import Question from "@/app/(homepage)/components/question";
 import { QuestionStep } from "@/types/forms";
-import { Metadata, ResolvingMetadata } from "next";
 
 type Card = {
   id: number;
@@ -31,58 +30,11 @@ async function getCard(slug: string) {
   return data as Card;
 }
 
-type Props = {
+export default async function CardPage({
+  params,
+}: {
   params: { slug: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
-};
-
-export async function generateMetadata(
-  { params }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
-  const card = await getCard(params.slug);
-
-  if (!card) {
-    return {
-      title: "Valentine Card Not Found 💔",
-      description: "This valentine card doesn&apos;t exist. Create your own!",
-    };
-  }
-
-  const firstQuestion =
-    card.questions[0]?.question || "Will you be my Valentine?";
-  const firstImage =
-    card.questions[0]?.image || "https://i.giphy.com/XxEy4h6YxKE2H5TZ1x.webp";
-
-  // optionally access and extend parent metadata
-  const previousImages = (await parent).openGraph?.images || [];
-
-  return {
-    title: `Valentine Card for ${card.name || "Someone Special"} 💝`,
-    description: firstQuestion,
-    openGraph: {
-      title: `Valentine Card for ${card.name || "Someone Special"} 💝`,
-      description: firstQuestion,
-      images: [
-        {
-          url: firstImage,
-          width: 1200,
-          height: 630,
-          alt: "Valentine Card Preview",
-        },
-        ...previousImages,
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `Valentine Card for ${card.name || "Someone Special"} 💝`,
-      description: firstQuestion,
-      images: [firstImage],
-    },
-  };
-}
-
-export default async function CardPage({ params }: Props) {
+}) {
   const card = await getCard(params.slug);
 
   if (!card) {
