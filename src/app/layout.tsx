@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import Script from "next/script";
-
+import { Analytics } from "@vercel/analytics/react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -68,6 +68,7 @@ export default function RootLayout({
         <div className="flex flex-col items-center justify-center">
           <div className="w-full max-w-screen-lg">{children}</div>
         </div>
+        <Analytics />
       </body>
     </html>
   );
