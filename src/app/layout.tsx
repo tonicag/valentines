@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,6 +43,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <Script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-TC9HQ6EY41"
+        />
+        <Script>
+          {`window.dataLayer = window.dataLayer || [];
+          function gtag() {
+            dataLayer.push(arguments);
+          }
+          gtag("js", new Date());
+
+          gtag("config", "G-TC9HQ6EY41");`}
+        </Script>
+      </head>
       <body className={inter.className}>
         <div className="sticky top-0 flex items-center justify-center py-4 text-white bg-pink-500 border-b-4 border-pink-900 z-[1000]">
           <Link href="/" className="text-2xl font-bold">
