@@ -95,7 +95,7 @@ export default function CreateCardForm() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="Email" {...field} />
+                  <Input placeholder="Email" type="email" {...field} />
                 </FormControl>
                 <FormDescription>Your email address. ❤️</FormDescription>
                 <FormMessage />
